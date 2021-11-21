@@ -151,4 +151,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #For Deployment on Heroku
 STATICFILES_STORAGE='whitenoise.storage.CompressedManifestStaticFilesStorage'
 import dj_database_url
-DATABASES['default'].update(dj_database_url.config(CONN_MAX_AGE = 500))
+DATABASES['default'].update(dj_database_url.config())
