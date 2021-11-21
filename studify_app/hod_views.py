@@ -83,7 +83,7 @@ def addStaffSave(request):
             messages.success(request,"Successfully Added Staff")
             return HttpResponseRedirect(reverse("add_staff"))
         except:
-            messages.error(request,"Failed to Add Staff")
+            messages.error(request,"Failed to Add Faculty")
             return HttpResponseRedirect(reverse("add_staff"))
 
 def addCourse(request):
