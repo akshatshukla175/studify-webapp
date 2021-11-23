@@ -1,6 +1,6 @@
 {% extends 'staff_template/base_template.html' %}
 {% block page_title %}
-Staff Notifications
+Faculty Notifications
 {% endblock page_title %}
 {% block main_content %}
     <!-- Main content -->
@@ -14,19 +14,11 @@ Staff Notifications
               <div class="card-header">
                 <h3 class="card-title">All Notifications</h3>
 
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                    </div>
-                  </div>
-                </div>
+                
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+                <table class="table table-hover text-wrap">
                   <thead>
                     <tr>
                       <th>Notifications</th>
@@ -35,7 +27,8 @@ Staff Notifications
                   <tbody>
                   {% for notification in notifications %}
                     <tr>
-                      <td>{{ notification.message }}</td>
+                      <td style="word-wrap: break-word;">{{ notification.message }}</td>
+                      <td>{{ notification.created_at }}</td>
                     </tr>
                   {% endfor %}
                   </tbody>

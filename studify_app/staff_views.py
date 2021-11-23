@@ -239,7 +239,7 @@ def staff_fcmtoken_save(request):
 
 def staff_all_notification(request):
     staff=Staffs.objects.get(admin=request.user.id)
-    notifications=NotificationStaffs.objects.filter(staff_id=staff.id)
+    notifications=NotificationStaffs.objects.filter(staff_id=staff.id).order_by('-created_at')
     return render(request,"staff_template/all_notification.html",{"notifications":notifications})
 
 def staff_add_result(request):

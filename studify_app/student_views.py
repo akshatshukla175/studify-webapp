@@ -143,7 +143,7 @@ def student_fcmtoken_save(request):
 
 def student_all_notification(request):
     student=Students.objects.get(admin=request.user.id)
-    notifications=NotificationStudent.objects.filter(student_id=student.id)
+    notifications=NotificationStudent.objects.filter(student_id=student.id).order_by('-created_at')
     return render(request,"student_template/all_notification.html",{"notifications":notifications})
 
 def student_view_result(request):
