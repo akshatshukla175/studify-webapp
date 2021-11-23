@@ -46,7 +46,7 @@
            <li class="nav-item">
             {% url 'student_apply_leave' as student_apply_leave %}
             <a href="{{ student_apply_leave }}" class="nav-link {% if request.path == student_apply_leave %} active {% endif %}">
-              <i class="nav-icon fa-thermometer-half"></i>
+              <i class="nav-icon fas fa-thermometer-half"></i>
               <p>
                 Apply for Leave
               </p>
@@ -73,7 +73,7 @@
           <li class="nav-item">
             {% url 'student_all_notification' as student_all_notification %}
             <a href="{{ student_all_notification }}" class="nav-link {% if request.path == student_all_notification %} active {% endif %}">
-              <i class="nav-icon fa-envelope-open"></i>
+              <i class="nav-icon fa fa-envelope-open"></i>
               <p>
                 Notifications
               </p>
