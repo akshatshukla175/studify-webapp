@@ -36,7 +36,7 @@
           <li class="nav-item">
             {% url 'staff_take_attendance' as staff_take_attendance %}
             <a href="{{ staff_take_attendance }}" class="nav-link {% if request.path == staff_take_attendance %} active {% endif %}">
-              <i class="nav-icon fa fa-calendar"></i>
+              <i class="nav-icon fas fa-calendar-alt"></i>
               <p>
                 Take Attendance
               </p>
@@ -45,7 +45,7 @@
            <li class="nav-item">
             {% url 'staff_update_attendance' as staff_update_attendance %}
             <a href="{{ staff_update_attendance }}" class="nav-link {% if request.path == staff_update_attendance %} active {% endif %}">
-              <i class="fa fa-calendar-plus-o"></i>
+              <i class="nav-icon far fa-calendar-plus"></i>
               <p>
                 Update Attendance
               </p>
@@ -72,7 +72,7 @@
           <li class="nav-item">
             {% url 'staff_add_result' as staff_add_result %}
             <a href="{{ staff_add_result }}" class="nav-link {% if request.path == staff_add_result %} active {% endif %}">
-              <i class="fa fa-bar-chart"></i>
+              <i class="nav-icon fas fa-chart-bar"></i>
               <p>
                 Add Result
               </p>
@@ -81,7 +81,7 @@
           <li class="nav-item">
             {% url 'edit_student_result' as edit_student_result %}
             <a href="{{ edit_student_result }}" class="nav-link {% if request.path == edit_student_result %} active {% endif %}">
-              <i class="fa fa-area-chart"></i>
+              <i class="nav-icon fas fa-chart-line"></i>
               <p>
                 Edit Result
               </p>

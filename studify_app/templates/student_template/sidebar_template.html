@@ -37,7 +37,7 @@
             {% url 'student_view_attendance' as student_view_attendance %}
             {% url 'student_view_attendance_post' as student_view_attendance_post %}
             <a href="{{ student_view_attendance }}" class="nav-link {% if request.path == student_view_attendance %} active {% endif %} {% if request.path == student_view_attendance_post %} active {% endif %}">
-              <i class="nav-icon fa fa-calendar"></i>
+              <i class="nav-icon fas fa-calendar-alt"></i>
               <p>
                 View Attendance
               </p>
@@ -64,7 +64,7 @@
           <li class="nav-item">
             {% url 'student_view_result' as student_view_result %}
             <a href="{{ student_view_result }}" class="nav-link {% if request.path == student_view_result %} active {% endif %}">
-              <i class="nav-icon fa fa-bar-chart"></i>
+              <i class="nav-icon fas fa-chart-bar"></i>
               <p>
                 Grade Card
               </p>
