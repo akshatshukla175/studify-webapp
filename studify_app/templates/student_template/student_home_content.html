@@ -124,88 +124,98 @@ Home
 {% endblock main_content %}
 {% block custom_js %}
 <script>
-    $(document).ready(function(){
+                  $(document).ready(function(){
 
-            var subjects='{{ data_name|safe }}';
-            var data1='{{ data1 }}';
-            var data2='{{ data2 }}';
-            //Data Set for PIE CHart
-           var pieData  = {
-              labels: [
-                  'ABSENT',
-                  'PRESENT',
-                  'TOTAL'
-              ],
-              datasets: [
-                {
-                  data: ['{{ attendance_absent }}','{{ attendance_present }}','{{ total_attendance }}'],
-                  backgroundColor : ['#f56954', '#00a65a','#ffc107'],
-                }
-              ]
-            }
-
-
-            //Data Set for Bar Chart
-                var areaChartData = {
-                  labels  : subjects,
-                  datasets: [
-                    {
-                      label               : 'Present in Class',
-                      backgroundColor     : 'rgba(60,141,188,0.9)',
-                      borderColor         : 'rgba(60,141,188,0.8)',
-                      pointRadius          : false,
-                      pointColor          : '#3b8bba',
-                      pointStrokeColor    : 'rgba(60,141,188,1)',
-                      pointHighlightFill  : '#fff',
-                      pointHighlightStroke: 'rgba(60,141,188,1)',
-                      data                : data1
-                    },
-                    {
-                      label               : 'Absent in Class',
-                      backgroundColor     : 'rgba(210, 214, 222, 1)',
-                      borderColor         : 'rgba(210, 214, 222, 1)',
-                      pointRadius         : false,
-                      pointColor          : 'rgba(210, 214, 222, 1)',
-                      pointStrokeColor    : '#c1c7d1',
-                      pointHighlightFill  : '#fff',
-                      pointHighlightStroke: 'rgba(220,220,220,1)',
-                      data                : data2
-                    },
-                  ]
-                }
+                    var subjects={{ data_name|safe }};
+                    var data1={{ data1 }};
+                    var data2={{ data2 }};
+                    //Data Set for PIE CHart
+                    var pieData  = {
+                      labels: [
+                          'ABSENT',
+                          'PRESENT',
+                          'TOTAL'
+                      ],
+                      datasets: [
+                        {
+                          data: [{{ attendance_absent }},{{ attendance_present }},{{ total_attendance }}],
+                          backgroundColor : ['#f56954', '#00a65a','#ffc107'],
+                        }
+                      ]
+                    }
 
 
-            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-            var pieOptions     = {
-              maintainAspectRatio : false,
-              responsive : true,
-            }
-            //Create pie or douhnut chart
-            // You can switch between pie and douhnut using the method below.
-            var pieChart = new Chart(pieChartCanvas, {
-              type: 'pie',
-              data: pieData,
-              options: pieOptions
-            });
+                    //Data Set for Bar Chart
+                        var areaChartData = {
+                          labels  : subjects,
+                          datasets: [
+                            {
+                              label               : 'Present in Class',
+                              backgroundColor     : 'rgba(60,141,188,0.9)',
+                              borderColor         : 'rgba(60,141,188,0.8)',
+                              pointRadius          : false,
+                              pointColor          : '#3b8bba',
+                              pointStrokeColor    : 'rgba(60,141,188,1)',
+                              pointHighlightFill  : '#fff',
+                              pointHighlightStroke: 'rgba(60,141,188,1)',
+                              data                : data1
+                            },
+                            {
+                              label               : 'Absent in Class',
+                              backgroundColor     : 'rgba(210, 214, 222, 1)',
+                              borderColor         : 'rgba(210, 214, 222, 1)',
+                              pointRadius         : false,
+                              pointColor          : 'rgba(210, 214, 222, 1)',
+                              pointStrokeColor    : '#c1c7d1',
+                              pointHighlightFill  : '#fff',
+                              pointHighlightStroke: 'rgba(220,220,220,1)',
+                              data                : data2
+                            },
+                          ]
+                        }
 
 
-            var barChartCanvas = $('#barChart').get(0).getContext('2d')
-            var barChartData = jQuery.extend(true, {}, areaChartData)
-            var temp1 = areaChartData.datasets[0]
-            barChartData.datasets[0] = temp1
+              var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+              var pieOptions     = {
+                maintainAspectRatio : false,
+                responsive : true,
+              }
+              //Create pie or douhnut chart
+              // You can switch between pie and douhnut using the method below.
+              var pieChart = new Chart(pieChartCanvas, {
+                type: 'pie',
+                data: pieData,
+                options: pieOptions
+              });
 
-            var barChartOptions = {
-              responsive              : true,
-              maintainAspectRatio     : false,
-              datasetFill             : false
-            }
 
-            var barChart = new Chart(barChartCanvas, {
-              type: 'bar',
-              data: barChartData,
-              options: barChartOptions
-            })
-    })
+              var barChartCanvas = $('#barChart').get(0).getContext('2d')
+              var barChartData = jQuery.extend(true, {}, areaChartData)
+              var temp1 = areaChartData.datasets[0]
+              barChartData.datasets[0] = temp1
+
+              var barChartOptions = {
+                responsive              : true,
+                maintainAspectRatio     : false,
+                datasetFill             : false,
+                scales: {
+                          yAxes: [{
+                              display: true,
+                              ticks: {
+                                  suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                                  // OR //
+                                  beginAtZero: true   // minimum value will be 0.
+                              }
+                          }]
+                        }
+              }
+
+              var barChart = new Chart(barChartCanvas, {
+                type: 'bar',
+                data: barChartData,
+                options: barChartOptions
+})
+})
 </script>
 <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-messaging.js"></script>

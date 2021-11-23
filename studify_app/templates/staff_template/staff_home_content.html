@@ -141,7 +141,7 @@ Home
               ],
               datasets: [
                 {
-                  data: ['{{ attendance_count }}','{{ leave_count }}'],
+                  data: [{{ attendance_count }},{{ leave_count }}],
                   backgroundColor : ['#f56954', '#00a65a'],
                 }
               ]
@@ -160,8 +160,8 @@ Home
             });
 
 
-                var attendance_list='{{ attendance_list }}';
-                var subject_list='{{ subject_list|safe }}';
+                var attendance_list={{ attendance_list }};
+                var subject_list={{ subject_list|safe }};
                 var barChartData = {
                   labels  : subject_list,
                   datasets: [
@@ -178,6 +178,7 @@ Home
                     }
                   ]
                 }
+                
                 var barChartCanvas = $('#barChart').get(0).getContext('2d')
                 var temp0 = barChartData.datasets[0]
                 barChartData.datasets[0] = temp0
@@ -185,7 +186,17 @@ Home
                 var barChartOptions = {
                   responsive              : true,
                   maintainAspectRatio     : false,
-                  datasetFill             : false
+                  datasetFill             : false,
+                  scales: {
+                          yAxes: [{
+                              display: true,
+                              ticks: {
+                                  suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                                  // OR //
+                                  beginAtZero: true   // minimum value will be 0.
+                              }
+                          }]
+                        }
                 }
 
                 var barChart = new Chart(barChartCanvas, {
@@ -195,9 +206,9 @@ Home
                 })
 
 
-                var student_list='{{ student_list|safe }}';
-                var present_list='{{ present_list }}';
-                var absent_list='{{ absent_list }}';
+                var student_list={{ student_list|safe }};
+                var present_list={{ present_list }};
+                var absent_list={{ absent_list }};
                  var barChartData2 = {
                   labels  : student_list,
                   datasets: [
@@ -232,7 +243,18 @@ Home
                 var barChartOptions2 = {
                   responsive              : true,
                   maintainAspectRatio     : false,
-                  datasetFill             : false
+                  datasetFill             : false,
+                  scales: {
+                          yAxes: [{
+                              display: true,
+                              ticks: {
+                                  suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                                  // OR //
+                                  beginAtZero: true   // minimum value will be 0.
+                              }
+                          }]
+                        }
+                  
                 }
 
                 var barChart2 = new Chart(barChartCanvas2, {
