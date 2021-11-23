@@ -18,7 +18,7 @@ from django.urls import path,include
 from django.conf.urls.static import static
 
 from studify import settings
-from studify_app import hod_views,staff_views,student_views
+from studify_app import hod_views, Result,staff_views,student_views
 from studify_app import views
 
 urlpatterns = [
@@ -69,8 +69,10 @@ urlpatterns = [
     path('admin_profile_save', hod_views.admin_profile_save,name="admin_profile_save"),
     path('check_email_exist', hod_views.check_email_exist,name="check_email_exist"),
     path('check_username_exist', hod_views.check_username_exist,name="check_username_exist"),
-
-    
+    path('admin_send_notification_staff', hod_views.admin_send_notification_staff,name="admin_send_notification_staff"),
+    path('admin_send_notification_student', hod_views.admin_send_notification_student,name="admin_send_notification_student"),
+    path('send_student_notification', hod_views.send_student_notification,name="send_student_notification"),
+    path('send_staff_notification', hod_views.send_staff_notification,name="send_staff_notification"),
     
 
     # Faculty URL Paths
@@ -90,9 +92,12 @@ urlpatterns = [
     path('staff_profile', staff_views.staff_profile, name="staff_profile"),
     path('staff_profile_save', staff_views.staff_profile_save, name="staff_profile_save"),
     path('staff_fcmtoken_save', staff_views.staff_fcmtoken_save, name="staff_fcmtoken_save"),
+    path('staff_all_notification', staff_views.staff_all_notification, name="staff_all_notification"),
+    path('staff_add_result', staff_views.staff_add_result, name="staff_add_result"),
+    path('save_student_result', staff_views.save_student_result, name="save_student_result"),
+    path('edit_student_result',Result.Result.as_view(), name="edit_student_result"),
+    path('fetch_result_student',staff_views.fetch_result_student, name="fetch_result_student"),
     
-
-
     # Student URL Paths
 
     path('student_home', student_views.studentHome, name="student_home"),
@@ -106,7 +111,9 @@ urlpatterns = [
     path('student_profile', student_views.student_profile, name="student_profile"),
     path('student_profile_save', student_views.student_profile_save, name="student_profile_save"),
     path('student_fcmtoken_save', student_views.student_fcmtoken_save, name="student_fcmtoken_save"),
-   
+    path('firebase-messaging-sw.js',views.showFirebaseJS,name="show_firebase_js"),
+    path('student_all_notification',student_views.student_all_notification,name="student_all_notification"),
+    path('student_view_result',student_views.student_view_result,name="student_view_result"),
 
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)+static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

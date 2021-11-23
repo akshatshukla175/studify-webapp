@@ -6,7 +6,7 @@ from datetime import datetime
 from django.urls.base import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from studify_app.models import CustomUser, FeedBackStudent, LeaveReportStudent,Students,Subjects,Attendance,AttendanceReport
+from studify_app.models import CustomUser, FeedBackStudent, LeaveReportStudent, NotificationStudent, StudentResult,Students,Subjects,Attendance,AttendanceReport
 
 
 def studentHome(request):
@@ -117,3 +117,13 @@ def student_fcmtoken_save(request):
         return HttpResponse("True")
     except:
         return HttpResponse("False")
+
+def student_all_notification(request):
+    student=Students.objects.get(admin=request.user.id)
+    notifications=NotificationStudent.objects.filter(student_id=student.id)
+    return render(request,"student_template/all_notification.html",{"notifications":notifications})
+
+def student_view_result(request):
+    student=Students.objects.get(admin=request.user.id)
+    studentresult=StudentResult.objects.filter(student_id=student.id)
+    return render(request,"student_template/student_result.html",{"studentresult":studentresult})

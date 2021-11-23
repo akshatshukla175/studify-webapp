@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-9s!8rcbfh!^pdq1zn-$egisfa0eic99^^l9$l$#x4_qjxg*(57
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["studify2021.herokuapp.com"]
+ALLOWED_HOSTS = ["studify2021.herokuapp.com","127.0.0.1"]
 
 # Media Paths
 
