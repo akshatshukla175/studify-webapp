@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Studify</title>
+  <title>Studify | Admin Signup</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -22,21 +22,28 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <b>Studify</b>
-    <h5>Learning Management System</h5>
+    <a href="../../index2.html"><b>Studify</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to Studify</p>
+      <p class="login-box-msg">Sign up as Admin</p>
 
-      <form action="/do_login" method="post">
-        {% csrf_token %}
+      <form action="/do_admin_signup" method="post" id="demo-form">
+      {% csrf_token %}
         <div class="input-group mb-3">
           <input type="email" class="form-control" placeholder="Email" name="email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+              <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Username" name="username">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user-alt"></span>
             </div>
           </div>
         </div>
@@ -48,52 +55,28 @@
             </div>
           </div>
         </div>
-        <div class="row">  
-          <!-- /.col -->
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block" >Sign In</button>
-          </div><!-- /.col -->
-          <div class="col-12 text-center" style="margin-top: 10px;">
-            <b> Forgot password ? Click below to reset it. </b><span class="fas fa-arrow-circle-down"></span>
-          </div><!-- /.col -->
-          
-          <!-- /.col -->
-          <div class="col-12 text-center" style="margin-top: 10px;">
-            <a href="{% url 'password_reset' %}">Reset Password</a>
-          </div><!-- /.col -->
-        </div>
 
         <div class="row">
-          <div class="col-12 text-center" style="margin-top: 10px;">
-            <b>New here ? Create your account today.</b>
+          <!-- /.col -->
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary btn-block" >Create Admin Account</button>
           </div><!-- /.col -->
-          <div class="col-12 text-center" style="margin-top: 10px;">
-            <a href="{% url 'signup_admin' %}">Admin Sign up</a>
-          </div><!-- /.col -->
-          <div class="col-12 text-center" style="margin-top: 10px;">
-            <a href="{% url 'signup_staff' %}">Staff Sign up</a>
-          </div><!-- /.col -->
-          <div class="col-12 text-center" style="margin-top: 10px;">
-            <a href="{% url 'signup_student' %}">Student Sign up</a>
-          </div><!-- /.col -->
+
         </div>
         <div class="row">
           {% if messages %}
-          <div class="col-12">
+         <div class="col-12">
             {% for message in messages %}
             {% if message.tags == 'error' %}
             <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
-            {% endif %}
-            {% if message.tags == 'success' %}
-            <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
             {% endif %}
             {% endfor %}
           </div>
           {% endif %}
         </div>
-        </div>
-
       </form>
+
+      <!-- /.social-auth-links -->
 
     </div>
     <!-- /.login-card-body -->
@@ -105,8 +88,9 @@
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
 <!-- Bootstrap 4 -->
 <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<!-- App -->
+<!-- AdminLTE App -->
 <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </body>
 </html>
