@@ -105,11 +105,11 @@ def addCourseSave(request):
             messages.error(request,"Failed To Add Course")
             return HttpResponseRedirect(reverse("add_course"))
 
-def add_student(request):
+def addStudent(request):
     form=AddStudentForm()
     return render(request,"hod_template/add_student_template.html",{"form":form})
 
-def add_student_save(request):
+def addStudentSave(request):
     if request.method!="POST":
         return HttpResponse("Method Not Allowed")
     else:
@@ -150,12 +150,12 @@ def add_student_save(request):
             return render(request, "hod_template/add_student_template.html", {"form": form})
 
 
-def add_subject(request):
+def addSubject(request):
     courses=Courses.objects.all()
     staffs=CustomUser.objects.filter(user_type=2)
     return render(request,"hod_template/add_subject_template.html",{"staffs":staffs,"courses":courses})
 
-def add_subject_save(request):
+def addSubjectSave(request):
     if request.method!="POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
@@ -175,27 +175,27 @@ def add_subject_save(request):
             return HttpResponseRedirect(reverse("add_subject"))
 
 
-def manage_staff(request):
+def manageStaff(request):
     staffs=Staffs.objects.all()
     return render(request,"hod_template/manage_staff_template.html",{"staffs":staffs})
 
-def manage_student(request):
+def manageStudent(request):
     students=Students.objects.all()
     return render(request,"hod_template/manage_student_template.html",{"students":students})
 
-def manage_course(request):
+def manageCourse(request):
     courses=Courses.objects.all()
     return render(request,"hod_template/manage_course_template.html",{"courses":courses})
 
-def manage_subject(request):
+def manageSubject(request):
     subjects=Subjects.objects.all()
     return render(request,"hod_template/manage_subject_template.html",{"subjects":subjects})
 
-def edit_staff(request,staff_id):
+def editStaff(request,staff_id):
     staff=Staffs.objects.get(admin=staff_id)
     return render(request,"hod_template/edit_staff_template.html",{"staff":staff,"id":staff_id})
 
-def edit_staff_save(request):
+def editStaffSave(request):
     if request.method!="POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
@@ -223,7 +223,7 @@ def edit_staff_save(request):
             messages.error(request,"Failed to Edit Staff")
             return HttpResponseRedirect(reverse("edit_staff",kwargs={"staff_id":staff_id}))
 
-def edit_student(request,student_id):
+def editStudent(request,student_id):
     request.session['student_id']=student_id
     student=Students.objects.get(admin=student_id)
     form=EditStudentForm()
@@ -237,7 +237,7 @@ def edit_student(request,student_id):
     form.fields['session_year_id'].initial=student.session_year_id.id
     return render(request,"hod_template/edit_student_template.html",{"form":form,"id":student_id,"username":student.admin.username})
 
-def edit_student_save(request):
+def editStudentSave(request):
     if request.method!="POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
@@ -294,13 +294,13 @@ def edit_student_save(request):
             student=Students.objects.get(admin=student_id)
             return render(request,"hod_template/edit_student_template.html",{"form":form,"id":student_id,"username":student.admin.username})
 
-def edit_subject(request,subject_id):
+def editSubject(request,subject_id):
     subject=Subjects.objects.get(id=subject_id)
     courses=Courses.objects.all()
     staffs=CustomUser.objects.filter(user_type=2)
     return render(request,"hod_template/edit_subject_template.html",{"subject":subject,"staffs":staffs,"courses":courses,"id":subject_id})
 
-def edit_subject_save(request):
+def editSubjectSave(request):
     if request.method!="POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
@@ -325,11 +325,11 @@ def edit_subject_save(request):
             return HttpResponseRedirect(reverse("edit_subject",kwargs={"subject_id":subject_id}))
 
 
-def edit_course(request,course_id):
+def editCourse(request,course_id):
     course=Courses.objects.get(id=course_id)
     return render(request,"hod_template/edit_course_template.html",{"course":course,"id":course_id})
 
-def edit_course_save(request):
+def editCourseSave(request):
     if request.method!="POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
@@ -348,10 +348,10 @@ def edit_course_save(request):
             return HttpResponseRedirect(reverse("edit_course",kwargs={"course_id":course_id}))
 
 
-def manage_session(request):
+def manageSession(request):
     return render(request,"hod_template/manage_session_template.html")
 
-def add_session_save(request):
+def addSessionSave(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("manage_session"))
     else:
@@ -368,7 +368,7 @@ def add_session_save(request):
             return HttpResponseRedirect(reverse("manage_session"))
 
 @csrf_exempt
-def check_email_exist(request):
+def checkEmailExist(request):
     email=request.POST.get("email")
     user_obj=CustomUser.objects.filter(email=email).exists()
     if user_obj:
@@ -377,7 +377,7 @@ def check_email_exist(request):
         return HttpResponse(False)
 
 @csrf_exempt
-def check_username_exist(request):
+def checkUsernameExist(request):
     username=request.POST.get("username")
     user_obj=CustomUser.objects.filter(username=username).exists()
     if user_obj:
@@ -385,16 +385,16 @@ def check_username_exist(request):
     else:
         return HttpResponse(False)
 
-def staff_feedback_message(request):
+def staffFeedbackMessage(request):
     feedbacks=FeedBackStaffs.objects.all()
     return render(request,"hod_template/staff_feedback_template.html",{"feedbacks":feedbacks})
 
-def student_feedback_message(request):
+def studentFeedbackMessage(request):
     feedbacks=FeedBackStudent.objects.all()
     return render(request,"hod_template/student_feedback_template.html",{"feedbacks":feedbacks})
 
 @csrf_exempt
-def student_feedback_message_replied(request):
+def studentFeedbackMessageReplied(request):
     feedback_id=request.POST.get("id")
     feedback_message=request.POST.get("message")
 
@@ -407,7 +407,7 @@ def student_feedback_message_replied(request):
         return HttpResponse("False")
 
 @csrf_exempt
-def staff_feedback_message_replied(request):
+def staffFeedbackMessageReplied(request):
     feedback_id=request.POST.get("id")
     feedback_message=request.POST.get("message")
 
@@ -419,46 +419,46 @@ def staff_feedback_message_replied(request):
     except:
         return HttpResponse("False")
 
-def staff_leave_view(request):
+def staffLeaveView(request):
     leaves=LeaveReportStaff.objects.all()
     return render(request,"hod_template/staff_leave_view.html",{"leaves":leaves})
 
-def student_leave_view(request):
+def studentLeaveView(request):
     leaves=LeaveReportStudent.objects.all()
     return render(request,"hod_template/student_leave_view.html",{"leaves":leaves})
 
-def student_approve_leave(request,leave_id):
+def studentApproveLeave(request,leave_id):
     leave=LeaveReportStudent.objects.get(id=leave_id)
     leave.leave_status=1
     leave.save()
     return HttpResponseRedirect(reverse("student_leave_view"))
 
-def student_disapprove_leave(request,leave_id):
+def studentDisapproveLeave(request,leave_id):
     leave=LeaveReportStudent.objects.get(id=leave_id)
     leave.leave_status=2
     leave.save()
     return HttpResponseRedirect(reverse("student_leave_view"))
 
 
-def staff_approve_leave(request,leave_id):
+def staffApproveLeave(request,leave_id):
     leave=LeaveReportStaff.objects.get(id=leave_id)
     leave.leave_status=1
     leave.save()
     return HttpResponseRedirect(reverse("staff_leave_view"))
 
-def staff_disapprove_leave(request,leave_id):
+def staffDisapproveLeave(request,leave_id):
     leave=LeaveReportStaff.objects.get(id=leave_id)
     leave.leave_status=2
     leave.save()
     return HttpResponseRedirect(reverse("staff_leave_view"))
 
-def admin_view_attendance(request):
+def adminViewAttendance(request):
     subjects=Subjects.objects.all()
     session_year_id=SessionYearModel.object.all()
     return render(request,"hod_template/admin_view_attendance.html",{"subjects":subjects,"session_year_id":session_year_id})
 
 @csrf_exempt
-def admin_get_attendance_dates(request):
+def adminGetAttendanceDates(request):
     subject=request.POST.get("subject")
     session_year_id=request.POST.get("session_year_id")
     subject_obj=Subjects.objects.get(id=subject)
@@ -473,7 +473,7 @@ def admin_get_attendance_dates(request):
 
 
 @csrf_exempt
-def admin_get_attendance_student(request):
+def adminGetAttendanceStudent(request):
     attendance_date=request.POST.get("attendance_date")
     attendance=Attendance.objects.get(id=attendance_date)
 
@@ -485,11 +485,11 @@ def admin_get_attendance_student(request):
         list_data.append(data_small)
     return JsonResponse(json.dumps(list_data),content_type="application/json",safe=False)
 
-def admin_profile(request):
+def adminProfile(request):
     user=CustomUser.objects.get(id=request.user.id)
     return render(request,"hod_template/admin_profile.html",{"user":user})
 
-def admin_profile_save(request):
+def adminProfileSave(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("admin_profile"))
     else:
@@ -507,16 +507,16 @@ def admin_profile_save(request):
             messages.error(request, "Failed to Update Profile")
             return HttpResponseRedirect(reverse("admin_profile"))
 
-def admin_send_notification_student(request):
+def adminSendNotificationStudent(request):
     students=Students.objects.all()
     return render(request,"hod_template/student_notification.html",{"students":students})
 
-def admin_send_notification_staff(request):
+def adminSendNotificationStaff(request):
     staffs=Staffs.objects.all()
     return render(request,"hod_template/staff_notification.html",{"staffs":staffs})
 
 @csrf_exempt
-def send_student_notification(request):
+def sendStudentNotification(request):
     id=request.POST.get("id")
     message=request.POST.get("message")
     student=Students.objects.get(admin=id)
@@ -539,7 +539,7 @@ def send_student_notification(request):
     return HttpResponse("True")
 
 @csrf_exempt
-def send_staff_notification(request):
+def sendStaffNotification(request):
     id=request.POST.get("id")
     message=request.POST.get("message")
     staff=Staffs.objects.get(admin=id)

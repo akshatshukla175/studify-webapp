@@ -7,7 +7,8 @@
   <title>Studify</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{% static 'plugins/favicon.ico' %}" />
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
   <!-- Ionicons -->
@@ -28,6 +29,8 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
+      <div style="text-align: center;"><img  src="{% static 'plugins/logo.png' %}" alt="Studify logo" style="width:50px;height:50px;"></div>
+      
       <p class="login-box-msg">Sign in to Studify</p>
 
       <form action="/do_login" method="post">

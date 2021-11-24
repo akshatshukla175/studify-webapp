@@ -59,13 +59,13 @@ def staffHome(request):
     return render(request,"staff_template/staff_home_content.html",{"students_count":students_count,"attendance_count":attendance_count,"leave_count":leave_count,"subject_count":subject_count,"subject_list":subject_list,"attendance_list":attendance_list,"student_list":student_list,"present_list":student_list_attendance_present,"absent_list":student_list_attendance_absent})
 
 
-def staff_take_attendance(request):
+def staffTakeAttendance(request):
     subjects=Subjects.objects.filter(staff_id=request.user.id)
     session_years=SessionYearModel.object.all()
     return render(request,"staff_template/staff_take_attendance.html",{"subjects":subjects,"session_years":session_years})
 
 @csrf_exempt
-def get_students(request):
+def getStudents(request):
     subject_id=request.POST.get("subject")
     session_year=request.POST.get("session_year")
 
@@ -80,7 +80,7 @@ def get_students(request):
     return JsonResponse(json.dumps(list_data),content_type="application/json",safe=False)
 
 @csrf_exempt
-def save_attendance_data(request):
+def saveAttendanceData(request):
     student_ids=request.POST.get("student_ids")
     subject_id=request.POST.get("subject_id")
     attendance_date=request.POST.get("attendance_date")
@@ -101,13 +101,13 @@ def save_attendance_data(request):
     except:
         return HttpResponse("ERR")
 
-def staff_update_attendance(request):
+def staffUpdateAttendance(request):
     subjects=Subjects.objects.filter(staff_id=request.user.id)
     session_year_id=SessionYearModel.object.all()
     return render(request,"staff_template/staff_update_attendance.html",{"subjects":subjects,"session_year_id":session_year_id})
 
 @csrf_exempt
-def get_attendance_dates(request):
+def getAttendanceDates(request):
     subject=request.POST.get("subject")
     session_year_id=request.POST.get("session_year_id")
     subject_obj=Subjects.objects.get(id=subject)
@@ -121,7 +121,7 @@ def get_attendance_dates(request):
     return JsonResponse(json.dumps(attendance_obj),safe=False)
 
 @csrf_exempt
-def get_attendance_student(request):
+def getAttendanceStudent(request):
     attendance_date=request.POST.get("attendance_date")
     attendance=Attendance.objects.get(id=attendance_date)
 
@@ -134,7 +134,7 @@ def get_attendance_student(request):
     return JsonResponse(json.dumps(list_data),content_type="application/json",safe=False)
 
 @csrf_exempt
-def save_updateattendance_data(request):
+def saveUpdateAttendanceData(request):
     student_ids=request.POST.get("student_ids")
     attendance_date=request.POST.get("attendance_date")
     attendance=Attendance.objects.get(id=attendance_date)
@@ -175,12 +175,12 @@ def staff_apply_leave_save(request):
             return HttpResponseRedirect(reverse("staff_apply_leave"))
 
 
-def staff_feedback(request):
+def staffFeedback(request):
     staff_id=Staffs.objects.get(admin=request.user.id)
     feedback_data=FeedBackStaffs.objects.filter(staff_id=staff_id)
     return render(request,"staff_template/staff_feedback.html",{"feedback_data":feedback_data})
 
-def staff_feedback_save(request):
+def staffFeedbackSave(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("staff_feedback_save"))
     else:
@@ -196,12 +196,12 @@ def staff_feedback_save(request):
             messages.error(request, "Failed To Send Feedback")
             return HttpResponseRedirect(reverse("staff_feedback"))
 
-def staff_profile(request):
+def staffProfile(request):
     user=CustomUser.objects.get(id=request.user.id)
     staff=Staffs.objects.get(admin=user)
     return render(request,"staff_template/staff_profile.html",{"user":user,"staff":staff})
 
-def staff_profile_save(request):
+def staffProfileSave(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("staff_profile"))
     else:
@@ -227,7 +227,7 @@ def staff_profile_save(request):
             return HttpResponseRedirect(reverse("staff_profile"))
 
 @csrf_exempt
-def staff_fcmtoken_save(request):
+def staffFcmtokenSave(request):
     token=request.POST.get("token")
     try:
         staff=Staffs.objects.get(admin=request.user.id)
@@ -237,17 +237,17 @@ def staff_fcmtoken_save(request):
     except:
         return HttpResponse("False")
 
-def staff_all_notification(request):
+def staffAllNotification(request):
     staff=Staffs.objects.get(admin=request.user.id)
     notifications=NotificationStaffs.objects.filter(staff_id=staff.id).order_by('-created_at')
     return render(request,"staff_template/all_notification.html",{"notifications":notifications})
 
-def staff_add_result(request):
+def staffAddResult(request):
     subjects=Subjects.objects.filter(staff_id=request.user.id)
     session_years=SessionYearModel.object.all()
     return render(request,"staff_template/staff_add_result.html",{"subjects":subjects,"session_years":session_years})
 
-def save_student_result(request):
+def saveStudentResult(request):
     if request.method!='POST':
         return HttpResponseRedirect('staff_add_result')
     student_admin_id=request.POST.get('student_list')
@@ -278,7 +278,7 @@ def save_student_result(request):
         return HttpResponseRedirect(reverse("staff_add_result"))
 
 @csrf_exempt
-def fetch_result_student(request):
+def fetchResultStudent(request):
     subject_id=request.POST.get('subject_id')
     student_id=request.POST.get('student_id')
     student_obj=Students.objects.get(admin=student_id)

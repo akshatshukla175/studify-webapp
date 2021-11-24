@@ -70,18 +70,18 @@ def showFirebaseJS(request):
 
     return HttpResponse(data,content_type="text/javascript")
 
-def signup_admin(request):
+def signupAdmin(request):
     return render(request,"signup_admin_page.html")
 
-def signup_student(request):
+def signupStudent(request):
     courses=Courses.objects.all()
     session_years=SessionYearModel.object.all()
     return render(request,"signup_student_page.html",{"courses":courses,"session_years":session_years})
 
-def signup_staff(request):
+def signupStaff(request):
     return render(request,"signup_staff_page.html")
 
-def do_admin_signup(request):
+def doAdminSignup(request):
     username=request.POST.get("username")
     email=request.POST.get("email")
     password=request.POST.get("password")
@@ -95,7 +95,7 @@ def do_admin_signup(request):
         messages.error(request,"Failed to Create Admin")
         return HttpResponseRedirect(reverse("show_login"))
 
-def do_staff_signup(request):
+def doStaffSignup(request):
     username=request.POST.get("username")
     email=request.POST.get("email")
     password=request.POST.get("password")
@@ -111,7 +111,7 @@ def do_staff_signup(request):
         messages.error(request,"Failed to Create Staff")
         return HttpResponseRedirect(reverse("show_login"))
 
-def do_signup_student(request):
+def doSignupStudent(request):
     first_name = request.POST.get("first_name")
     last_name = request.POST.get("last_name")
     username = request.POST.get("username")
