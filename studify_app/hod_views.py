@@ -527,7 +527,7 @@ def sendStudentNotification(request):
             "title":"Studify",
             "body":message,
             "click_action": "https://studify2021.herokuapp.com/student_all_notification",
-            "icon": "http://studify2021.herokuapp.com/static/dist/img/user2-160x160.jpg"
+            "icon": "http://studify2021.herokuapp.com/static/dist/img/avatar5.png"
         },
         "to":token
     }
@@ -550,7 +550,7 @@ def sendStaffNotification(request):
             "title":"Studify",
             "body":message,
             "click_action":"https://studentmanagementsystem22.herokuapp.com/staff_all_notification",
-            "icon":"http://studentmanagementsystem22.herokuapp.com/static/dist/img/user2-160x160.jpg"
+            "icon":"http://studentmanagementsystem22.herokuapp.com/static/dist/img/avatar5.png"
         },
         "to":token
     }
