@@ -115,7 +115,7 @@ Start your machine using the command
 ![18](https://github.com/akshatshukla175/studify-webapp/blob/main/demo/18.png)
 ![19](https://github.com/akshatshukla175/studify-webapp/blob/main/demo/19.png)
 
-## Screenshots
+## Demo
 
 Insert gif or link to demo
 
