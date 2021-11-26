@@ -92,28 +92,28 @@ Start your machine using the command
     requests==2.26.0
 ## Database Design
 
-![design](https://github.com/akshatshukla175/studify-webapp/demo/dd.png")
+![design](https://github.com/akshatshukla175/studify-webapp/demo/dd.png)
 ## Screenshots
 
-![1](https://github.com/akshatshukla175/studify-webapp/demo/1.png")
-![2](https://github.com/akshatshukla175/studify-webapp/demo/2.png")
-![3](https://github.com/akshatshukla175/studify-webapp/demo/3.png")
-![4](https://github.com/akshatshukla175/studify-webapp/demo/4.png")
-![5](https://github.com/akshatshukla175/studify-webapp/demo/5.png")
-![6](https://github.com/akshatshukla175/studify-webapp/demo/6.png")
-![7](https://github.com/akshatshukla175/studify-webapp/demo/7.png")
-![8](https://github.com/akshatshukla175/studify-webapp/demo/8.png")
-![9](https://github.com/akshatshukla175/studify-webapp/demo/9.png")
-![10](https://github.com/akshatshukla175/studify-webapp/demo/10.png")
-![11](https://github.com/akshatshukla175/studify-webapp/demo/11.png")
-![12](https://github.com/akshatshukla175/studify-webapp/demo/12.png")
-![13](https://github.com/akshatshukla175/studify-webapp/demo/13.png")
-![14](https://github.com/akshatshukla175/studify-webapp/demo/14.png")
-![15](https://github.com/akshatshukla175/studify-webapp/demo/15.png")
-![16](https://github.com/akshatshukla175/studify-webapp/demo/16.png")
-![17](https://github.com/akshatshukla175/studify-webapp/demo/17.png")
-![18](https://github.com/akshatshukla175/studify-webapp/demo/18.png")
-![19](https://github.com/akshatshukla175/studify-webapp/demo/19.png")
+![1](https://github.com/akshatshukla175/studify-webapp/demo/1.png)
+![2](https://github.com/akshatshukla175/studify-webapp/demo/2.png)
+![3](https://github.com/akshatshukla175/studify-webapp/demo/3.png)
+![4](https://github.com/akshatshukla175/studify-webapp/demo/4.png)
+![5](https://github.com/akshatshukla175/studify-webapp/demo/5.png)
+![6](https://github.com/akshatshukla175/studify-webapp/demo/6.png)
+![7](https://github.com/akshatshukla175/studify-webapp/demo/7.png)
+![8](https://github.com/akshatshukla175/studify-webapp/demo/8.png)
+![9](https://github.com/akshatshukla175/studify-webapp/demo/9.png)
+![10](https://github.com/akshatshukla175/studify-webapp/demo/10.png)
+![11](https://github.com/akshatshukla175/studify-webapp/demo/11.png)
+![12](https://github.com/akshatshukla175/studify-webapp/demo/12.png)
+![13](https://github.com/akshatshukla175/studify-webapp/demo/13.png)
+![14](https://github.com/akshatshukla175/studify-webapp/demo/14.png)
+![15](https://github.com/akshatshukla175/studify-webapp/demo/15.png)
+![16](https://github.com/akshatshukla175/studify-webapp/demo/16.png)
+![17](https://github.com/akshatshukla175/studify-webapp/demo/17.png)
+![18](https://github.com/akshatshukla175/studify-webapp/demo/18.png)
+![19](https://github.com/akshatshukla175/studify-webapp/demo/19.png)
 
 ## Screenshots
 
