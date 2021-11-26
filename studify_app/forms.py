@@ -10,6 +10,8 @@ class ChoiceNoValidation(ChoiceField):
 class DateInput(forms.DateInput):
     input_type = "date"
 
+
+# form to input student data
 class AddStudentForm(forms.Form):
     email=forms.EmailField(label="Email",max_length=50,widget=forms.EmailInput(attrs={"class":"form-control","autocomplete":"off"}))
     password=forms.CharField(label="Password",max_length=50,widget=forms.PasswordInput(attrs={"class":"form-control"}))
@@ -46,6 +48,7 @@ class AddStudentForm(forms.Form):
     session_year_id=forms.ChoiceField(label="Session Year",choices=session_list,widget=forms.Select(attrs={"class":"form-control"}))
     profile_pic=forms.FileField(label="Profile Pic",max_length=50,widget=forms.FileInput(attrs={"class":"form-control"}))
 
+# form to edit student data
 class EditStudentForm(forms.Form):
     email=forms.EmailField(label="Email",max_length=50,widget=forms.EmailInput(attrs={"class":"form-control"}))
     first_name=forms.CharField(label="First Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
@@ -84,6 +87,7 @@ class EditStudentForm(forms.Form):
     session_year_id=forms.ChoiceField(label="Session Year",choices=session_list,widget=forms.Select(attrs={"class":"form-control"}))
     profile_pic=forms.FileField(label="Profile Pic",max_length=50,widget=forms.FileInput(attrs={"class":"form-control"}),required=False)
 
+# form to edit student's result
 class EditResultForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.staff_id=kwargs.pop("staff_id")

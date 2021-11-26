@@ -22,19 +22,28 @@ from studify_app import hod_views, Result,staff_views,student_views
 from studify_app import views
 
 urlpatterns = [
+    
+    # demo page path
     path('demo', views.showDemoPage),
+
+    path('admin/', admin.site.urls),
+    path('accounts/',include('django.contrib.auth.urls')),
+    
+    # Sign up paths
     path('signup_admin',views.signupAdmin,name="signup_admin"),
     path('signup_student',views.signupStudent,name="signup_student"),
     path('signup_staff',views.signupStaff,name="signup_staff"),
     path('do_admin_signup',views.doAdminSignup,name="do_admin_signup"),
     path('do_staff_signup',views.doStaffSignup,name="do_staff_signup"),
     path('do_signup_student',views.doSignupStudent,name="do_signup_student"),
-    path('admin/', admin.site.urls),
-    path('accounts/',include('django.contrib.auth.urls')),
-    path('',views.showLoginPage, name="show_login"),
+
+    # User paths
     path('get_user_details', views.getUserDetails),
     path('do_login',views.doLogin,name="do_login"),
     path('logout_user', views.logoutUser, name="logout"),
+    path('',views.showLoginPage, name="show_login"),
+
+    # Admin/HOD URL Paths
     path('admin_home', hod_views.adminHome, name = "admin_home"),
     path('add_staff',hod_views.addStaff,name="add_staff"),
     path('add_staff_save',hod_views.addStaffSave,name="add_staff_save"),
@@ -82,7 +91,6 @@ urlpatterns = [
     
 
     # Faculty URL Paths
-
     path('staff_home', staff_views.staffHome, name="staff_home"),
     path('staff_take_attendance', staff_views.staffTakeAttendance, name="staff_take_attendance"),
     path('staff_update_attendance', staff_views.staffUpdateAttendance, name="staff_update_attendance"),
@@ -105,7 +113,6 @@ urlpatterns = [
     path('fetch_result_student',staff_views.fetchResultStudent, name="fetch_result_student"),
     
     # Student URL Paths
-
     path('student_home', student_views.studentHome, name="student_home"),
     path('save_attendance_data', staff_views.saveAttendanceData, name="save_attendance_data"),
     path('student_view_attendance', student_views.studentViewAttendance, name="student_view_attendance"),

@@ -3,8 +3,6 @@ from datetime import datetime
 from uuid import uuid4
 
 from django.contrib import messages
-from django.core import serializers
-from django.forms import model_to_dict
 from django.http import HttpResponse, JsonResponse,HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -13,7 +11,7 @@ from django.shortcuts import render
 
 from studify_app.models import Courses, CustomUser, NotificationStaffs, SessionYearModel, StudentResult,Subjects,Students,Attendance,AttendanceReport,Staffs,LeaveReportStaff,FeedBackStaffs
 
-
+# displays the faculty home page
 def staffHome(request):
     subjects=Subjects.objects.filter(staff_id=request.user.id)
     course_id_list=[]
@@ -22,22 +20,16 @@ def staffHome(request):
         course_id_list.append(course.id)
 
     final_course=[]
-    #removing Duplicate Course ID
+    
     for course_id in course_id_list:
         if course_id not in final_course:
             final_course.append(course_id)
 
     students_count=Students.objects.filter(course_id__in=final_course).count()
-
-    #Fetch All Attendance Count
     attendance_count=Attendance.objects.filter(subject_id__in=subjects).count()
-
-    #Fetch All Approve Leave
     staff=Staffs.objects.get(admin=request.user.id)
     leave_count=LeaveReportStaff.objects.filter(staff_id=staff.id,leave_status=1).count()
     subject_count=subjects.count()
-
-    #Fetch Attendance Data by Subject
     subject_list=[]
     attendance_list=[]
     for subject in subjects:
@@ -58,12 +50,13 @@ def staffHome(request):
 
     return render(request,"staff_template/staff_home_content.html",{"students_count":students_count,"attendance_count":attendance_count,"leave_count":leave_count,"subject_count":subject_count,"subject_list":subject_list,"attendance_list":attendance_list,"student_list":student_list,"present_list":student_list_attendance_present,"absent_list":student_list_attendance_absent})
 
-
+# allows the faculty member to take attendance of students
 def staffTakeAttendance(request):
     subjects=Subjects.objects.filter(staff_id=request.user.id)
     session_years=SessionYearModel.object.all()
     return render(request,"staff_template/staff_take_attendance.html",{"subjects":subjects,"session_years":session_years})
 
+# gets the students enrolled under a faculty member
 @csrf_exempt
 def getStudents(request):
     subject_id=request.POST.get("subject")
@@ -79,6 +72,7 @@ def getStudents(request):
         list_data.append(data_small)
     return JsonResponse(json.dumps(list_data),content_type="application/json",safe=False)
 
+# saves attendance of the students enrolled under a faculty member
 @csrf_exempt
 def saveAttendanceData(request):
     student_ids=request.POST.get("student_ids")
@@ -101,11 +95,13 @@ def saveAttendanceData(request):
     except:
         return HttpResponse("ERR")
 
+# updates the attendance of students enrolled under a faculty member
 def staffUpdateAttendance(request):
     subjects=Subjects.objects.filter(staff_id=request.user.id)
     session_year_id=SessionYearModel.object.all()
     return render(request,"staff_template/staff_update_attendance.html",{"subjects":subjects,"session_year_id":session_year_id})
 
+# gets the dates to mark the attendance of students enrolled under a faculty member
 @csrf_exempt
 def getAttendanceDates(request):
     subject=request.POST.get("subject")
@@ -120,6 +116,7 @@ def getAttendanceDates(request):
 
     return JsonResponse(json.dumps(attendance_obj),safe=False)
 
+# gets the attendance of a student enrolled under a faculty member
 @csrf_exempt
 def getAttendanceStudent(request):
     attendance_date=request.POST.get("attendance_date")
@@ -133,15 +130,13 @@ def getAttendanceStudent(request):
         list_data.append(data_small)
     return JsonResponse(json.dumps(list_data),content_type="application/json",safe=False)
 
+# updates the attendance of students enrolled under a faculty member
 @csrf_exempt
 def saveUpdateAttendanceData(request):
     student_ids=request.POST.get("student_ids")
     attendance_date=request.POST.get("attendance_date")
     attendance=Attendance.objects.get(id=attendance_date)
-
     json_sstudent=json.loads(student_ids)
-
-
     try:
         for stud in json_sstudent:
              student=Students.objects.get(admin=stud['id'])
@@ -152,11 +147,13 @@ def saveUpdateAttendanceData(request):
     except:
         return HttpResponse("ERR")
 
+# renders the leaves page for faculty member
 def staff_apply_leave(request):
     staff_obj = Staffs.objects.get(admin=request.user.id)
     leave_data=LeaveReportStaff.objects.filter(staff_id=staff_obj)
     return render(request,"staff_template/staff_apply_leave.html",{"leave_data":leave_data})
 
+# allows the faculty member to apply for leaves
 def staff_apply_leave_save(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("staff_apply_leave"))
@@ -174,12 +171,13 @@ def staff_apply_leave_save(request):
             messages.error(request, "Failed To Apply for Leave")
             return HttpResponseRedirect(reverse("staff_apply_leave"))
 
-
+# renders the feedback page for faculty member
 def staffFeedback(request):
     staff_id=Staffs.objects.get(admin=request.user.id)
     feedback_data=FeedBackStaffs.objects.filter(staff_id=staff_id)
     return render(request,"staff_template/staff_feedback.html",{"feedback_data":feedback_data})
 
+# allows the faculty member to save feedback and send it to the admin
 def staffFeedbackSave(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("staff_feedback_save"))
@@ -196,11 +194,13 @@ def staffFeedbackSave(request):
             messages.error(request, "Failed To Send Feedback")
             return HttpResponseRedirect(reverse("staff_feedback"))
 
+# renders the profile page for faculty member
 def staffProfile(request):
     user=CustomUser.objects.get(id=request.user.id)
     staff=Staffs.objects.get(admin=user)
     return render(request,"staff_template/staff_profile.html",{"user":user,"staff":staff})
 
+# allows the faculty member to update his profile
 def staffProfileSave(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("staff_profile"))
@@ -226,6 +226,7 @@ def staffProfileSave(request):
             messages.error(request, "Failed to Update Profile")
             return HttpResponseRedirect(reverse("staff_profile"))
 
+# updates the fcm token for notification
 @csrf_exempt
 def staffFcmtokenSave(request):
     token=request.POST.get("token")
@@ -237,16 +238,19 @@ def staffFcmtokenSave(request):
     except:
         return HttpResponse("False")
 
+# renders the notification page of faculty member
 def staffAllNotification(request):
     staff=Staffs.objects.get(admin=request.user.id)
     notifications=NotificationStaffs.objects.filter(staff_id=staff.id).order_by('-created_at')
     return render(request,"staff_template/all_notification.html",{"notifications":notifications})
 
+# renders the add result page  
 def staffAddResult(request):
     subjects=Subjects.objects.filter(staff_id=request.user.id)
     session_years=SessionYearModel.object.all()
     return render(request,"staff_template/staff_add_result.html",{"subjects":subjects,"session_years":session_years})
 
+# updates the marks of students
 def saveStudentResult(request):
     if request.method!='POST':
         return HttpResponseRedirect('staff_add_result')
@@ -254,8 +258,6 @@ def saveStudentResult(request):
     assignment_marks=request.POST.get('assignment_marks')
     exam_marks=request.POST.get('exam_marks')
     subject_id=request.POST.get('subject')
-
-
     student_obj=Students.objects.get(admin=student_admin_id)
     subject_obj=Subjects.objects.get(id=subject_id)
 
@@ -277,6 +279,7 @@ def saveStudentResult(request):
         messages.error(request, "Failed to Add Result")
         return HttpResponseRedirect(reverse("staff_add_result"))
 
+# gets the result and marks of a student enrolled under a faculty member
 @csrf_exempt
 def fetchResultStudent(request):
     subject_id=request.POST.get('subject_id')

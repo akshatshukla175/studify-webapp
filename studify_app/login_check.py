@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
 
-
+# login check middleware to avoid problems such as hardcoding urls and sql injection 
 class LoginCheck(MiddlewareMixin):
     def processView(self,request,view_func,view_args,view_kwargs):
         modulename = view_func.__module__

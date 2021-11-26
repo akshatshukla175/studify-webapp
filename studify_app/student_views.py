@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from studify_app.models import Courses, CustomUser, FeedBackStudent, LeaveReportStudent, NotificationStudent, OnlineClassRoom, SessionYearModel, StudentResult,Students,Subjects,Attendance,AttendanceReport
 
-
+# displays the student home page
 def studentHome(request):
     student_obj=Students.objects.get(admin=request.user.id)
     attendance_total=AttendanceReport.objects.filter(student_id=student_obj).count()
@@ -34,13 +34,14 @@ def studentHome(request):
 
     return render(request,"student_template/student_home_content.html",{"total_attendance":attendance_total,"attendance_absent":attendance_absent,"attendance_present":attendance_present,"subjects":subjects,"data_name":subject_name,"data1":data_present,"data2":data_absent,"class_room":class_room})
 
-
+# renders the attendance page
 def studentViewAttendance(request):
     student=Students.objects.get(admin=request.user.id)
     course=student.course_id
     subjects=Subjects.objects.filter(course_id=course)
     return render(request,"student_template/student_view_attendance.html",{"subjects":subjects})
 
+# views the attendance for a given subject
 def studentViewAttendancePost(request):
     subject_id=request.POST.get("subject")
     start_date=request.POST.get("start_date")
@@ -56,11 +57,13 @@ def studentViewAttendancePost(request):
     attendance_reports=AttendanceReport.objects.filter(attendance_id__in=attendance,student_id=stud_obj)
     return render(request,"student_template/student_attendance_data.html",{"attendance_reports":attendance_reports})
 
+# renders the leaves page for student
 def studentApplyLeave(request):
     staff_obj = Students.objects.get(admin=request.user.id)
     leave_data=LeaveReportStudent.objects.filter(student_id=staff_obj)
     return render(request,"student_template/student_apply_leave.html",{"leave_data":leave_data})
 
+# allows the student to apply for leaves
 def studentApplyLeaveSave(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("student_apply_leave"))
@@ -78,12 +81,13 @@ def studentApplyLeaveSave(request):
             messages.error(request, "Failed To Apply for Leave")
             return HttpResponseRedirect(reverse("student_apply_leave"))
 
-
+# renders the feedback page for student
 def studentFeedback(request):
     staff_id=Students.objects.get(admin=request.user.id)
     feedback_data=FeedBackStudent.objects.filter(student_id=staff_id)
     return render(request,"student_template/student_feedback.html",{"feedback_data":feedback_data})
 
+# allows student to save feedback and send it to the admin
 def studentFeedbackSave(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("student_feedback"))
@@ -100,11 +104,13 @@ def studentFeedbackSave(request):
             messages.error(request, "Failed To Send Feedback")
             return HttpResponseRedirect(reverse("student_feedback"))
 
+# renders the profile page for student
 def studentProfile(request):
     user=CustomUser.objects.get(id=request.user.id)
     student=Students.objects.get(admin=user)
     return render(request,"student_template/student_profile.html",{"user":user,"student":student})
 
+# allows the student to update his profile
 def studentProfileSave(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("student_profile"))
@@ -130,6 +136,7 @@ def studentProfileSave(request):
             messages.error(request, "Failed to Update Profile")
             return HttpResponseRedirect(reverse("student_profile"))
 
+# updates the fcm token for notification
 @csrf_exempt
 def studentFcmtokenSave(request):
     token=request.POST.get("token")
@@ -141,11 +148,13 @@ def studentFcmtokenSave(request):
     except:
         return HttpResponse("False")
 
+# renders the notification page of student
 def studentAllNotification(request):
     student=Students.objects.get(admin=request.user.id)
     notifications=NotificationStudent.objects.filter(student_id=student.id).order_by('-created_at')
     return render(request,"student_template/all_notification.html",{"notifications":notifications})
 
+# views the result of students enrolled in subjects
 def studentViewResult(request):
     student=Students.objects.get(admin=request.user.id)
     studentresult=StudentResult.objects.filter(student_id=student.id)

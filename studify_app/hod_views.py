@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from studify_app.models import Attendance, AttendanceReport, CustomUser,Courses, FeedBackStaffs, FeedBackStudent, LeaveReportStaff, LeaveReportStudent, NotificationStaffs, NotificationStudent,Staffs,Students,Subjects,SessionYearModel
 from studify_app.forms import AddStudentForm,EditStudentForm
 
+# displays the admin home page
 def adminHome(request):
     student_count1=Students.objects.all().count()
     staff_count=Staffs.objects.all().count()
@@ -63,10 +64,11 @@ def adminHome(request):
 
     return render(request,"hod_template/home_content.html",{"student_count":student_count1,"staff_count":staff_count,"subject_count":subject_count,"course_count":course_count,"course_name_list":course_name_list,"subject_count_list":subject_count_list,"student_count_list_in_course":student_count_list_in_course,"student_count_list_in_subject":student_count_list_in_subject,"subject_list":subject_list,"staff_name_list":staff_name_list,"attendance_present_list_staff":attendance_present_list_staff,"attendance_absent_list_staff":attendance_absent_list_staff,"student_name_list":student_name_list,"attendance_present_list_student":attendance_present_list_student,"attendance_absent_list_student":attendance_absent_list_student})
 
-
+# displays the admin add faculty page
 def addStaff(request):
     return render(request,"hod_template/add_staff_template.html")
 
+# adds the faculty's details in database
 def addStaffSave(request):
     if request.method!="POST":
         return HttpResponse("Method Not Allowed")
@@ -87,9 +89,11 @@ def addStaffSave(request):
             messages.error(request,"Failed to Add Faculty")
             return HttpResponseRedirect(reverse("add_staff"))
 
+# displays the admin add course page
 def addCourse(request):
     return render(request,"hod_template/add_course_template.html")
 
+# adds the course's details in database
 def addCourseSave(request):
     if request.method!="POST":
         return HttpResponse("Method Not Allowed")
@@ -105,10 +109,12 @@ def addCourseSave(request):
             messages.error(request,"Failed To Add Course")
             return HttpResponseRedirect(reverse("add_course"))
 
+# displays the admin add student page
 def addStudent(request):
     form=AddStudentForm()
     return render(request,"hod_template/add_student_template.html",{"form":form})
 
+# adds the student's details in database
 def addStudentSave(request):
     if request.method!="POST":
         return HttpResponse("Method Not Allowed")
@@ -149,12 +155,13 @@ def addStudentSave(request):
             form=AddStudentForm(request.POST)
             return render(request, "hod_template/add_student_template.html", {"form": form})
 
-
+# displays the admin add subject page
 def addSubject(request):
     courses=Courses.objects.all()
     staffs=CustomUser.objects.filter(user_type=2)
     return render(request,"hod_template/add_subject_template.html",{"staffs":staffs,"courses":courses})
 
+# adds the subject's details in database
 def addSubjectSave(request):
     if request.method!="POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
@@ -174,27 +181,32 @@ def addSubjectSave(request):
             messages.error(request,"Failed to Add Subject")
             return HttpResponseRedirect(reverse("add_subject"))
 
-
+# views all faculty members
 def manageStaff(request):
     staffs=Staffs.objects.all()
     return render(request,"hod_template/manage_staff_template.html",{"staffs":staffs})
 
+# views all students
 def manageStudent(request):
     students=Students.objects.all()
     return render(request,"hod_template/manage_student_template.html",{"students":students})
 
+# views all courses
 def manageCourse(request):
     courses=Courses.objects.all()
     return render(request,"hod_template/manage_course_template.html",{"courses":courses})
 
+# views all subjects
 def manageSubject(request):
     subjects=Subjects.objects.all()
     return render(request,"hod_template/manage_subject_template.html",{"subjects":subjects})
 
+# renders edit faculty page
 def editStaff(request,staff_id):
     staff=Staffs.objects.get(admin=staff_id)
     return render(request,"hod_template/edit_staff_template.html",{"staff":staff,"id":staff_id})
 
+# edits faculty's details
 def editStaffSave(request):
     if request.method!="POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
@@ -223,6 +235,7 @@ def editStaffSave(request):
             messages.error(request,"Failed to Edit Staff")
             return HttpResponseRedirect(reverse("edit_staff",kwargs={"staff_id":staff_id}))
 
+# renders edit student page
 def editStudent(request,student_id):
     request.session['student_id']=student_id
     student=Students.objects.get(admin=student_id)
@@ -237,6 +250,7 @@ def editStudent(request,student_id):
     form.fields['session_year_id'].initial=student.session_year_id.id
     return render(request,"hod_template/edit_student_template.html",{"form":form,"id":student_id,"username":student.admin.username})
 
+# edits student's details 
 def editStudentSave(request):
     if request.method!="POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
@@ -294,12 +308,14 @@ def editStudentSave(request):
             student=Students.objects.get(admin=student_id)
             return render(request,"hod_template/edit_student_template.html",{"form":form,"id":student_id,"username":student.admin.username})
 
+# renders edit subject page
 def editSubject(request,subject_id):
     subject=Subjects.objects.get(id=subject_id)
     courses=Courses.objects.all()
     staffs=CustomUser.objects.filter(user_type=2)
     return render(request,"hod_template/edit_subject_template.html",{"subject":subject,"staffs":staffs,"courses":courses,"id":subject_id})
 
+# edits subject's details
 def editSubjectSave(request):
     if request.method!="POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
@@ -324,11 +340,12 @@ def editSubjectSave(request):
             messages.error(request,"Failed to Edit Subject")
             return HttpResponseRedirect(reverse("edit_subject",kwargs={"subject_id":subject_id}))
 
-
+# renders edit course page
 def editCourse(request,course_id):
     course=Courses.objects.get(id=course_id)
     return render(request,"hod_template/edit_course_template.html",{"course":course,"id":course_id})
 
+# edits courses's details
 def editCourseSave(request):
     if request.method!="POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
@@ -347,10 +364,11 @@ def editCourseSave(request):
             messages.error(request,"Failed to Edit Course")
             return HttpResponseRedirect(reverse("edit_course",kwargs={"course_id":course_id}))
 
-
+# views all session years
 def manageSession(request):
     return render(request,"hod_template/manage_session_template.html")
 
+# adds session year
 def addSessionSave(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("manage_session"))
@@ -367,6 +385,7 @@ def addSessionSave(request):
             messages.error(request, "Failed to Add Session")
             return HttpResponseRedirect(reverse("manage_session"))
 
+# checks if a particular email exists or not
 @csrf_exempt
 def checkEmailExist(request):
     email=request.POST.get("email")
@@ -376,6 +395,7 @@ def checkEmailExist(request):
     else:
         return HttpResponse(False)
 
+# checks if a particular username exists or not
 @csrf_exempt
 def checkUsernameExist(request):
     username=request.POST.get("username")
@@ -385,14 +405,17 @@ def checkUsernameExist(request):
     else:
         return HttpResponse(False)
 
+# renders faculty feedback message page
 def staffFeedbackMessage(request):
     feedbacks=FeedBackStaffs.objects.all()
     return render(request,"hod_template/staff_feedback_template.html",{"feedbacks":feedbacks})
 
+# renders student feedback message page
 def studentFeedbackMessage(request):
     feedbacks=FeedBackStudent.objects.all()
     return render(request,"hod_template/student_feedback_template.html",{"feedbacks":feedbacks})
 
+# posts reply to the student trhough feedback message page
 @csrf_exempt
 def studentFeedbackMessageReplied(request):
     feedback_id=request.POST.get("id")
@@ -406,6 +429,7 @@ def studentFeedbackMessageReplied(request):
     except:
         return HttpResponse("False")
 
+# posts reply to the faculty trhough feedback message page
 @csrf_exempt
 def staffFeedbackMessageReplied(request):
     feedback_id=request.POST.get("id")
@@ -418,45 +442,52 @@ def staffFeedbackMessageReplied(request):
         return HttpResponse("True")
     except:
         return HttpResponse("False")
-
+    
+# views the leaves requested by faculty and allows the admin to act on them
 def staffLeaveView(request):
     leaves=LeaveReportStaff.objects.all()
     return render(request,"hod_template/staff_leave_view.html",{"leaves":leaves})
 
+# views the leaves requested by students and allows the admin to act on them
 def studentLeaveView(request):
     leaves=LeaveReportStudent.objects.all()
     return render(request,"hod_template/student_leave_view.html",{"leaves":leaves})
 
+# approves the leaves made by students
 def studentApproveLeave(request,leave_id):
     leave=LeaveReportStudent.objects.get(id=leave_id)
     leave.leave_status=1
     leave.save()
     return HttpResponseRedirect(reverse("student_leave_view"))
 
+# disapproves the leaves made by students
 def studentDisapproveLeave(request,leave_id):
     leave=LeaveReportStudent.objects.get(id=leave_id)
     leave.leave_status=2
     leave.save()
     return HttpResponseRedirect(reverse("student_leave_view"))
 
-
+# approves the leaves made by faculty
 def staffApproveLeave(request,leave_id):
     leave=LeaveReportStaff.objects.get(id=leave_id)
     leave.leave_status=1
     leave.save()
     return HttpResponseRedirect(reverse("staff_leave_view"))
 
+# disapproves the leaves made by faculty
 def staffDisapproveLeave(request,leave_id):
     leave=LeaveReportStaff.objects.get(id=leave_id)
     leave.leave_status=2
     leave.save()
     return HttpResponseRedirect(reverse("staff_leave_view"))
 
+# allows the admin to view attendance of students
 def adminViewAttendance(request):
     subjects=Subjects.objects.all()
     session_year_id=SessionYearModel.object.all()
     return render(request,"hod_template/admin_view_attendance.html",{"subjects":subjects,"session_year_id":session_year_id})
 
+# gets attendance dates to view students attendance
 @csrf_exempt
 def adminGetAttendanceDates(request):
     subject=request.POST.get("subject")
@@ -471,7 +502,7 @@ def adminGetAttendanceDates(request):
 
     return JsonResponse(json.dumps(attendance_obj),safe=False)
 
-
+# gets attendance of students on a given date
 @csrf_exempt
 def adminGetAttendanceStudent(request):
     attendance_date=request.POST.get("attendance_date")
@@ -485,10 +516,12 @@ def adminGetAttendanceStudent(request):
         list_data.append(data_small)
     return JsonResponse(json.dumps(list_data),content_type="application/json",safe=False)
 
+# shows admin profile
 def adminProfile(request):
     user=CustomUser.objects.get(id=request.user.id)
     return render(request,"hod_template/admin_profile.html",{"user":user})
 
+# updates admin profile and makes changes in the database
 def adminProfileSave(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("admin_profile"))
@@ -507,14 +540,17 @@ def adminProfileSave(request):
             messages.error(request, "Failed to Update Profile")
             return HttpResponseRedirect(reverse("admin_profile"))
 
+# sends the notification to student
 def adminSendNotificationStudent(request):
     students=Students.objects.all()
     return render(request,"hod_template/student_notification.html",{"students":students})
 
+# sends the notification to faculty
 def adminSendNotificationStaff(request):
     staffs=Staffs.objects.all()
     return render(request,"hod_template/staff_notification.html",{"staffs":staffs})
 
+# uses firebase to save notification sent to students
 @csrf_exempt
 def sendStudentNotification(request):
     id=request.POST.get("id")
@@ -531,13 +567,14 @@ def sendStudentNotification(request):
         },
         "to":token
     }
-    headers={"Content-Type":"application/json","Authorization":"key= AAAAfqJLLNI:APA91bGuRvtRVn4VpkcQ2s_TVXFOvXCrX69KuewqQNoagsV3ZDpIq4cTPiEq9pvAdchHqM_334xKW4x3853NQx3nTcgnpPKTeJhbmZWdtkkU3bub1egiOtEVLvh3gFhRamasBLu8a0np "}
+    headers={"Content-Type":"application/json","Authorization":"key= AAAAfqJLLNI:APA91bGuRvtRVn4VpkcQ2s_TVXFOvXCrX69KuewqQNoagsV3ZDpIq4cTPiEq9pvAdchHqM_334xKW4x3853NQx3nTcgnpPKTeJhbmZWdtkkU3bub1egiOtEVLvh3gFhRamasBLu8a0np"}
     data=requests.post(url,data=json.dumps(body),headers=headers)
     notification=NotificationStudent(student_id=student,message=message)
     notification.save()
     print(data.text)
     return HttpResponse("True")
 
+# uses firebase to save notification sent to faculty
 @csrf_exempt
 def sendStaffNotification(request):
     id=request.POST.get("id")
@@ -549,12 +586,12 @@ def sendStaffNotification(request):
         "notification":{
             "title":"Studify",
             "body":message,
-            "click_action":"https://studentmanagementsystem22.herokuapp.com/staff_all_notification",
-            "icon":"http://studentmanagementsystem22.herokuapp.com/static/dist/img/avatar5.png"
+            "click_action":"https://studify2021.herokuapp.com/staff_all_notification",
+            "icon":"http://studify2021.herokuapp.com/static/dist/img/avatar5.png"
         },
         "to":token
     }
-    headers={"Content-Type":"application/json","Authorization":"key= AAAAfqJLLNI:APA91bGuRvtRVn4VpkcQ2s_TVXFOvXCrX69KuewqQNoagsV3ZDpIq4cTPiEq9pvAdchHqM_334xKW4x3853NQx3nTcgnpPKTeJhbmZWdtkkU3bub1egiOtEVLvh3gFhRamasBLu8a0np "}
+    headers={"Content-Type":"application/json","Authorization":"key= AAAAfqJLLNI:APA91bGuRvtRVn4VpkcQ2s_TVXFOvXCrX69KuewqQNoagsV3ZDpIq4cTPiEq9pvAdchHqM_334xKW4x3853NQx3nTcgnpPKTeJhbmZWdtkkU3bub1egiOtEVLvh3gFhRamasBLu8a0np"}
     data=requests.post(url,data=json.dumps(body),headers=headers)
     notification=NotificationStaffs(staff_id=staff,message=message)
     notification.save()

@@ -7,7 +7,7 @@ from django.views import View
 from studify_app.forms import EditResultForm
 from studify_app.models import Students, Subjects, StudentResult
 
-
+# edits the student result , uses the EditResultForm class and updates the marks of students enrolled in a given course 
 class Result(View):
     def get(self,request,*args,**kwargs):
         staff_id=request.user.id

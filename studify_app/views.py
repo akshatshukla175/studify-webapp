@@ -9,13 +9,15 @@ from django.urls.base import reverse
 from studify_app.email_backend import EmailBackend
 from studify_app.models import Courses, CustomUser, SessionYearModel
 
-# Create your views here.
+# shows demo page
 def showDemoPage(request):
     return render(request, "demo.html")
 
+# shows login page
 def showLoginPage(request):
     return render(request, "login_page.html")
 
+# does the login for the user
 def doLogin(request):
     if request.method != "POST":
         return HttpResponse("<h2>Method not allowed</h2>")
@@ -34,16 +36,19 @@ def doLogin(request):
             messages.error(request, "Invalid Login Details")
             return HttpResponseRedirect("/")
 
+# logout the user
 def logoutUser(request):
     logout(request)
     return HttpResponseRedirect("/")
 
+# gets the user details
 def getUserDetails(request):
     if request.user != None:
         return HttpResponse("User : "+request.user.email+"usertype : "+request.user.user_type)
     else:
         return HttpResponse("Please login first")
 
+# firebase for push notifications
 def showFirebaseJS(request):
     data='importScripts("https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js");' \
          'importScripts("https://www.gstatic.com/firebasejs/7.14.6/firebase-messaging.js"); ' \
@@ -70,17 +75,21 @@ def showFirebaseJS(request):
 
     return HttpResponse(data,content_type="text/javascript")
 
+# renders the admin signup page
 def signupAdmin(request):
     return render(request,"signup_admin_page.html")
 
+# renders the student signup page
 def signupStudent(request):
     courses=Courses.objects.all()
     session_years=SessionYearModel.object.all()
     return render(request,"signup_student_page.html",{"courses":courses,"session_years":session_years})
 
+# renders the faculty member signup page
 def signupStaff(request):
     return render(request,"signup_staff_page.html")
 
+# signs up as admin
 def doAdminSignup(request):
     username=request.POST.get("username")
     email=request.POST.get("email")
@@ -95,6 +104,7 @@ def doAdminSignup(request):
         messages.error(request,"Failed to Create Admin")
         return HttpResponseRedirect(reverse("show_login"))
 
+# signs up as faculty member
 def doStaffSignup(request):
     username=request.POST.get("username")
     email=request.POST.get("email")
@@ -111,6 +121,7 @@ def doStaffSignup(request):
         messages.error(request,"Failed to Create Staff")
         return HttpResponseRedirect(reverse("show_login"))
 
+# signs up as student
 def doSignupStudent(request):
     first_name = request.POST.get("first_name")
     last_name = request.POST.get("last_name")
