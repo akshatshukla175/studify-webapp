@@ -28,7 +28,6 @@ This prototype takes care of the requirements of three major stakeholders
 - Can request for leaves.
 
 
-
 ## Features
 
 - **Online Forum with admin moderation.**
@@ -36,6 +35,28 @@ This prototype takes care of the requirements of three major stakeholders
 - **Feedback System**
 - **Security Middleware that prevents SQL injection**
 
+## Credentials for the deployed webapp
+
+You can use these credentials or make new ones using the signup forms for all three users. 
+
+**Admin**
+
+    Email id: admin@gmail.com
+    Password: 123
+    
+**Student**
+
+    Email id: s1@gmail.com
+    Password 123
+    Email id: s2@gmail.com
+    Password 123
+    
+**Faculty Member**
+
+    Email id: f1@gmail.com
+    Password 123
+    Email id: f2@gmail.com
+    Password 123
 
 ## Check out the deployed webapp here
 
@@ -117,8 +138,7 @@ Start your machine using the command
 
 ## Demo
 
-Insert gif or link to demo
-
+https://youtu.be/-gNdW9SKuM0
 
 ## Authors
 
