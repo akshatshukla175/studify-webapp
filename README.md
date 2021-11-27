@@ -114,6 +114,7 @@ Start your machine using the command
 ## Database Design
 
 ![design](https://github.com/akshatshukla175/studify-webapp/blob/main/demo/dd.png)
+
 ## Screenshots
 
 ![1](https://github.com/akshatshukla175/studify-webapp/blob/main/demo/1.png)
