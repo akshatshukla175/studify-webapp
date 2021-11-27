@@ -31,6 +31,8 @@ This prototype takes care of the requirements of three major stakeholders
 ## Features
 
 - **Online Forum with admin moderation.**
+ ![forum](https://github.com/akshatshukla175/studify-webapp/blob/main/demo/forum.png)
+ 
 - **Admin Dashbboard managing students, faculty, courses, subjects, session years**
 - **Feedback System**
 - **Security Middleware that prevents SQL injection**
@@ -61,6 +63,7 @@ You can use these credentials or make new ones using the signup forms for all th
 ## Check out the deployed webapp here
 
 https://studify2021.herokuapp.com
+
 ## Installation Steps on Local Machine
 
 1. **Clone project from Github**
